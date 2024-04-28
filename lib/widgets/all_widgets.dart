@@ -7,9 +7,11 @@ Widget ButtonStyeCustom(String label, String route) {
       ElevatedButton(
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
-            backgroundColor: Colors.lightBlue, // text color
+            backgroundColor: (label == 'ล็อคอิน Facebook')
+                ? Colors.lightBlue
+                : Color.fromARGB(255, 71, 216, 120), // text color
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20), // button border radius
+              borderRadius: BorderRadius.circular(15), // button border radius
             ),
             elevation: 5, // button elevation
           ),
@@ -18,7 +20,11 @@ Widget ButtonStyeCustom(String label, String route) {
           },
           child: Text(
             label,
-            style: TextStyle(fontStyle: FontStyle.normal),
+            style: TextStyle(
+              fontStyle: FontStyle.normal,
+              color:
+                  (label == 'ล็อคอิน Facebook') ? Colors.white : Colors.black,
+            ),
           )),
       SizedBox(
         height: 10,
