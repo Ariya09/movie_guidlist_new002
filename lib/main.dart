@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:movie_guidlist_new/routes/app_routes.dart';
@@ -13,13 +15,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyMainApp(),
+      routerConfig: Modular.routerConfig,
     );
   }
 }
@@ -34,17 +36,72 @@ class MyMainApp extends StatefulWidget {
 class _MyMainAppState extends State<MyMainApp> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(20),
-        color: Colors.amber,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/bg.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Column(
-            mainAxisAlignment:
-                MainAxisAlignment.center, // Center the Column vertically
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ButtonStyeCustom('ล็อคอิน', ''),
-              ButtonStyeCustom('ล็อคอิน Facebook', '')
+              Container(
+                  width: screenSize.width * 0.7,
+                  height: screenSize.height * 0.3,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        // Border width
+                        ),
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/logo.png',
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+              SizedBox(
+                height: 50,
+              ),
+              ButtonStyeCustom('ล็อคอิน', 'LoginPage'),
+              ButtonStyeCustom('ล็อคอิน Facebook', 'LoginPageFB'),
+              SizedBox(
+                height: 150,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Modular.to.pushNamed("/RegisterMemberPage");
+                },
+                child: Text(
+                  "สมัครสมาชิก",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 130),
+                child: Divider(
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              GestureDetector(
+                onTap: () {
+                  log("message");
+                },
+                child: Text(
+                  "เข้าใช้งานแบบไม่เป็นสมาชิก",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
             ],
           ),
         ),

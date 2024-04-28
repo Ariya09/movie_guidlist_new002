@@ -1,13 +1,28 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:movie_guidlist_new/main.dart';
+import 'package:movie_guidlist_new/modules/crate_member/register_member.dart';
+import 'package:movie_guidlist_new/modules/login/login.dart';
+import 'package:movie_guidlist_new/modules/login/login_fackbook.dart';
 
 class AppRoute extends Module {
   @override
-  bine(i) {}
+  void bine(i) {}
 
   @override
-  routes(r) {
+  void routes(r) {
     // TODO: implement routes
-    r.child('/', child: (context) => MyMainApp());
+    r.child('/', child: (context) => const MyMainApp());
+    r.child(
+      '/LoginPage',
+      child: (context) => LoginPage(),
+    );
+    r.child(
+      '/LoginPageFB',
+      child: (context) => LoginPageFacebook(),
+    );
+    r.child(
+      '/RegisterMemberPage',
+      child: (context) => RegisterMemberPage(),
+    );
   }
 }
