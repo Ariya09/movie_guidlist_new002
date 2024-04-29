@@ -1,6 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:movie_guidlist_new/main.dart';
 import 'package:movie_guidlist_new/modules/crate_member/register_member.dart';
+import 'package:movie_guidlist_new/modules/forget_password/forget_password.dart';
+import 'package:movie_guidlist_new/modules/forget_password/otp_pin.dart';
 import 'package:movie_guidlist_new/modules/login/login.dart';
 import 'package:movie_guidlist_new/modules/login/login_fackbook.dart';
 
@@ -24,5 +26,7 @@ class AppRoute extends Module {
       '/RegisterMemberPage',
       child: (context) => RegisterMemberPage(),
     );
+    r.child("/ForgetPassword", child: (context) => ForgetPasswordPage());
+    r.child("/OtpPin", child: (context) => OtpPin());
   }
 }

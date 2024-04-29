@@ -15,7 +15,7 @@ Widget ButtonStyeCustom(String label, String route) {
             foregroundColor: Colors.white,
             backgroundColor: (label == 'ล็อคอิน Facebook')
                 ? Colors.blue[900]
-                : Colors.blue[300], // text color
+                : Color.fromARGB(255, 51, 221, 243), // text color
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15), // button border radius
             ),
