@@ -26,106 +26,108 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "ล็อคอิน",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.cyan[900],
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/bg.jpg'),
-              fit: BoxFit.cover,
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "ล็อคอิน",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.cyan[900],
             ),
-          ),
-          child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(
-                    flex: 2,
-                  ),
-                  Container(
-                      width: screenSize.width * 0.6,
-                      height: screenSize.height * 0.25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            // Border width
-                            ),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/bg.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Spacer(
+                        flex: 2,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/logo.png',
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Text(
-                    "เข้าสู่ระบบ",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  textFieldCustomPassword('อีเมล', email_controller),
-                  textFieldCustomPassword('รหัสผ่าน', password_controller),
-
-                  // Expanded(
-                  //     child:
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Modular.to.pushNamed("/RegisterMemberPage");
-                          },
-                          child: Text(
-                            "สมัครสมาชิก",
-                            style: TextStyle(color: Colors.white),
+                      Container(
+                          width: screenSize.width * 0.6,
+                          height: screenSize.height * 0.25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                // Border width
+                                ),
                           ),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            Modular.to.pushNamed("/ForgetPassword");
-                          },
-                          child: Text(
-                            "ลืมรหัสผ่าน?",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Divider(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Text(
+                        "เข้าสู่ระบบ",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      textFieldCustomPassword('อีเมล', email_controller),
+                      textFieldCustomPassword('รหัสผ่าน', password_controller),
 
-                  //  ),
-                  ButtonStyeCustom('ล็อคอิน', 'loginEmail'),
-                  Spacer(
-                    flex: 2,
-                  )
-                ]),
-          ),
-        ));
+                      // Expanded(
+                      //     child:
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Modular.to.pushNamed("/RegisterMemberPage");
+                              },
+                              child: Text(
+                                "สมัครสมาชิก",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                Modular.to.pushNamed("/ForgetPassword");
+                              },
+                              child: Text(
+                                "ลืมรหัสผ่าน?",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Divider(
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      //  ),
+                      ButtonStyeCustom('ล็อคอิน', 'MainPage'),
+                      Spacer(
+                        flex: 2,
+                      )
+                    ]),
+              ),
+            )));
   }
 
   ButtonStyeCustom(String label, String route) {
@@ -146,6 +148,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             onPressed: () {
               log("message==> dasdasdsadd $route");
+              Modular.to.pushNamed("$route");
               _onLogin();
             },
             child: Text(
@@ -164,6 +167,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onLogin() {
+    log("xxx");
     setState(() {
       passwordText = password_controller.text.isEmpty;
       emailText = email_controller.text.isEmpty;

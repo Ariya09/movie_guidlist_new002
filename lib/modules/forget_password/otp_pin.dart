@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
+//import 'package:pinput/pinput.dart';
 
 class OtpPin extends StatefulWidget {
   const OtpPin({super.key});
@@ -12,19 +12,19 @@ class OtpPin extends StatefulWidget {
 
 class _OtpPinState extends State<OtpPin> {
   TextEditingController _pinEditingController = TextEditingController();
-  final defaultPinTheme = PinTheme(
-    width: 75,
-    height: 80,
-    textStyle: const TextStyle(
-      fontSize: 22,
-      color: Colors.black,
-    ),
-    decoration: BoxDecoration(
-      color: Colors.green.shade100,
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(color: Colors.transparent),
-    ),
-  );
+  // final defaultPinTheme = PinTheme(
+  //   width: 75,
+  //   height: 80,
+  //   textStyle: const TextStyle(
+  //     fontSize: 22,
+  //     color: Colors.black,
+  //   ),
+  //   decoration: BoxDecoration(
+  //     color: Colors.green.shade100,
+  //     borderRadius: BorderRadius.circular(8),
+  //     border: Border.all(color: Colors.transparent),
+  //   ),
+  // );
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -63,20 +63,20 @@ class _OtpPinState extends State<OtpPin> {
                     height: 30,
                   ),
 
-                  Pinput(
-                    length: 4,
-                    defaultPinTheme: defaultPinTheme,
-                    focusedPinTheme: defaultPinTheme.copyWith(
-                      decoration: defaultPinTheme.decoration!.copyWith(
-                        border: Border.all(color: Colors.green),
-                      ),
-                    ),
-                    onCompleted: (pin) {
-                      _pinEditingController.text = pin;
-                      debugPrint(pin);
-                      log("IDSSDFD====> ${_pinEditingController.text}");
-                    },
-                  ),
+                  // Pinput(
+                  //   length: 4,
+                  //   defaultPinTheme: defaultPinTheme,
+                  //   focusedPinTheme: defaultPinTheme.copyWith(
+                  //     decoration: defaultPinTheme.decoration!.copyWith(
+                  //       border: Border.all(color: Colors.green),
+                  //     ),
+                  //   ),
+                  //   onCompleted: (pin) {
+                  //     _pinEditingController.text = pin;
+                  //     debugPrint(pin);
+                  //     log("IDSSDFD====> ${_pinEditingController.text}");
+                  //   },
+                  // ),
                   SizedBox(
                     height: 20,
                   ),

@@ -37,7 +37,8 @@ class _MyMainAppState extends State<MyMainApp> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -106,6 +107,6 @@ class _MyMainAppState extends State<MyMainApp> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

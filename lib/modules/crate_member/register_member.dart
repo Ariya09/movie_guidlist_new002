@@ -24,67 +24,68 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "สมัครสมาชิก",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.cyan[900],
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/bg.jpg'),
-              fit: BoxFit.cover,
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "สมัครสมาชิก",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.cyan[900],
             ),
-          ),
-          child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Container(
-                      width: screenSize.width * 0.6,
-                      height: screenSize.height * 0.25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            // Border width
-                            ),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/bg.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Spacer(
+                        flex: 1,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/logo.png',
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  textFieldCustomPassword('ชื่อ', firstName_controller),
-                  textFieldCustomPassword('นามสกุล', lastName_controller),
-                  textFieldCustomPassword('อีเมล', email_controller),
-                  textFieldCustomPassword('รหัสผ่าน', password_controller),
+                      Container(
+                          width: screenSize.width * 0.6,
+                          height: screenSize.height * 0.25,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                                // Border width
+                                ),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      textFieldCustomPassword('ชื่อ', firstName_controller),
+                      textFieldCustomPassword('นามสกุล', lastName_controller),
+                      textFieldCustomPassword('อีเมล', email_controller),
+                      textFieldCustomPassword('รหัสผ่าน', password_controller),
 
-                  // Expanded(
-                  //     child:
+                      // Expanded(
+                      //     child:
 
-                  SizedBox(
-                    height: 20,
-                  ),
+                      SizedBox(
+                        height: 20,
+                      ),
 
-                  //  ),
-                  ButtonStyeCustom('สมัครสมาชิก', 'loginEmail'),
-                  Spacer(
-                    flex: 1,
-                  )
-                ]),
-          ),
-        ));
+                      //  ),
+                      ButtonStyeCustom('สมัครสมาชิก', 'loginEmail'),
+                      Spacer(
+                        flex: 1,
+                      )
+                    ]),
+              ),
+            )));
   }
 
   textFieldCustomPassword(String label, controller) {

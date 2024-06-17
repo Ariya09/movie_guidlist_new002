@@ -95,3 +95,10 @@ Widget textFieldCustom(String label, controller) {
     ],
   );
 }
+
+Widget textAllTitle(String title) {
+  return Text(
+    title,
+    style: TextStyle(fontSize: 24, color: Colors.white),
+  );
+}

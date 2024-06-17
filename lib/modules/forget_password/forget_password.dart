@@ -17,56 +17,57 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
 
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "ลืมรหัสผ่าน",
-            style: TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.cyan[900],
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/bg.jpg'),
-              fit: BoxFit.cover,
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: Text(
+                "ลืมรหัสผ่าน",
+                style: TextStyle(color: Colors.white),
+              ),
+              backgroundColor: Colors.cyan[900],
             ),
-          ),
-          child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Spacer(
-                    flex: 1,
-                  ),
-                  Text(
-                    "ลืมรหัสผ่าน",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  textFieldEmail('อีเมล', email_controller),
+            body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/bg.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Spacer(
+                        flex: 1,
+                      ),
+                      Text(
+                        "ลืมรหัสผ่าน",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      textFieldEmail('อีเมล', email_controller),
 
-                  // Expanded(
-                  //     child:
+                      // Expanded(
+                      //     child:
 
-                  SizedBox(
-                    height: 20,
-                  ),
+                      SizedBox(
+                        height: 20,
+                      ),
 
-                  //  ),
-                  ButtonStyeCustom('รับรหัส OTP', 'Pin OTP'),
-                  Spacer(
-                    flex: 1,
-                  )
-                ]),
-          ),
-        ));
+                      //  ),
+                      ButtonStyeCustom('รับรหัส OTP', 'Pin OTP'),
+                      Spacer(
+                        flex: 1,
+                      )
+                    ]),
+              ),
+            )));
   }
 
   textFieldEmail(String label, controller) {
