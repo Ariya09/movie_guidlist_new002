@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_guidlist_new/modules/favories/favories_page.dart';
-import 'package:movie_guidlist_new/modules/home_page/home_page.dart';
-import 'package:movie_guidlist_new/modules/profile_account/profile_account.dart';
+import 'package:movie_guidlist_new/modules/favories/view/favories_page.dart';
+import 'package:movie_guidlist_new/modules/home_page/view/home_page.dart';
+import 'package:movie_guidlist_new/modules/profile_account/view/profile_account.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

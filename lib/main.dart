@@ -62,7 +62,7 @@ class _MyMainAppState extends State<MyMainApp> {
                   child: ClipOval(
                     child: Image.asset(
                       'assets/logo.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   )),
               SizedBox(
@@ -97,6 +97,7 @@ class _MyMainAppState extends State<MyMainApp> {
               GestureDetector(
                 onTap: () {
                   log("message");
+                  Modular.to.pushNamed("/MainPage");
                 },
                 child: Text(
                   "เข้าใช้งานแบบไม่เป็นสมาชิก",
