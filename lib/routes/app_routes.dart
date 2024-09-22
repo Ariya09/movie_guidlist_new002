@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:movie_guidlist_new/main.dart';
+import 'package:movie_guidlist_new/modules/crate_member/bloc/register_bloc.dart';
 import 'package:movie_guidlist_new/modules/crate_member/view/register_member.dart';
 import 'package:movie_guidlist_new/modules/favories/view/favories_page.dart';
 import 'package:movie_guidlist_new/modules/forget_password/view/forget_password.dart';
@@ -16,7 +17,11 @@ import 'package:movie_guidlist_new/modules/profile_account/view/profile_detail.d
 
 class AppRoute extends Module {
   @override
-  void bine(i) {}
+  void binds(i) {
+    i.addSingleton<RegisterBloc>(RegisterBloc.new);
+
+    // i.addSingleton<ContextCubit>(ContextCubit.new);
+  }
 
   @override
   void routes(r) {
@@ -65,6 +70,10 @@ class AppRoute extends Module {
     r.child(
       '/ProfileEdit',
       child: (context) => ProfileEdit(),
+    );
+    r.child(
+      '/MovieDetail',
+      child: (context) => MovieDetail(),
     );
     r.child("/ForgetPassword", child: (context) => ForgetPasswordPage());
     r.child("/OtpPin", child: (context) => OtpPin());

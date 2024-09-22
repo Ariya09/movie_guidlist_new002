@@ -1,5 +1,15 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:movie_guidlist_new/modules/crate_member/bloc/register_bloc.dart';
+import 'package:movie_guidlist_new/modules/crate_member/models/register_payload.dart';
 import 'package:movie_guidlist_new/widgets/all_widgets.dart';
+import 'package:movie_guidlist_new/widgets/text.dart';
+import 'package:multiselect/multiselect.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RegisterMemberPage extends StatefulWidget {
   const RegisterMemberPage({super.key});
@@ -17,6 +27,12 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
   bool emailText = false;
   bool firstName = false;
   bool lastName = false;
+  File? image;
+  String? imgProfile;
+  final _formKey = GlobalKey<FormState>();
+
+  List<String> dropdownItems = ["sadas", "asdas"];
+  List<String> selectedItems = [];
 
   bool _isobscureText = true;
 
@@ -41,51 +57,132 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
                   fit: BoxFit.cover,
                 ),
               ),
-              child: Center(
+              height: screenSize.height * 1,
+              child: SingleChildScrollView(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Spacer(
-                        flex: 1,
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 20,
                       ),
-                      Container(
-                          width: screenSize.width * 0.6,
-                          height: screenSize.height * 0.25,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                                // Border width
+                      Stack(
+                        children: [
+                          image != null
+                              ? CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: FileImage(image!),
+                                )
+                              : CircleAvatar(
+                                  radius: 64,
+                                  backgroundImage: NetworkImage(imgProfile!),
                                 ),
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/logo.png',
-                              fit: BoxFit.cover,
+                          Positioned(
+                            child: IconButton(
+                              icon: const Icon(Icons.add_a_photo),
+                              color: Colors.white,
+                              onPressed: () {
+                                selectImage();
+                              },
+                            ),
+                            bottom: -10,
+                            left: 80,
+                          )
+                        ],
+                      ),
+
+                      Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              textFieldCustomPassword(
+                                  'ชื่อ', firstName_controller),
+                              textFieldCustomPassword(
+                                  'นามสกุล', lastName_controller),
+                              textFieldCustomPassword(
+                                  'อีเมล', email_controller),
+                              textFieldCustomPassword(
+                                  'รหัสผ่าน', password_controller),
+                            ],
+                          )),
+                      Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.white,
+                            ),
+                            child: DropDownMultiSelect(
+                              options: dropdownItems,
+                              selectedValues: selectedItems,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedItems = value;
+                                });
+                              },
+                              whenEmpty: 'Select your favorite type',
                             ),
                           )),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      textFieldCustomPassword('ชื่อ', firstName_controller),
-                      textFieldCustomPassword('นามสกุล', lastName_controller),
-                      textFieldCustomPassword('อีเมล', email_controller),
-                      textFieldCustomPassword('รหัสผ่าน', password_controller),
 
                       // Expanded(
                       //     child:
 
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
 
                       //  ),
-                      ButtonStyeCustom('สมัครสมาชิก', 'loginEmail'),
-                      Spacer(
-                        flex: 1,
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                        child: GestureDetector(
+                          onTap: () {
+                            _register();
+                          },
+                          child: Container(
+                            height: screenSize.height * 0.05,
+                            // width: screenSize.width * 0.8,
+                            decoration: BoxDecoration(
+                              //    color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.0),
+                              // border: Border.all(
+                              color: Color.fromARGB(255, 51, 221, 243),
+                              //  width: 1.5),
+                            ),
+                            child: Center(
+                                child: TextWidget.normalText("สมัครสมาชิก",
+                                    color: Colors.black)),
+                          ),
+                        ),
                       )
                     ]),
               ),
             )));
+  }
+
+  pickImg(ImageSource scr) async {
+    final ImagePicker img = ImagePicker();
+    XFile? file_img = await img.pickImage(source: scr);
+    if (file_img != null) {
+      return File(file_img.path);
+    }
+    print("NO Images Selected");
+  }
+
+  void selectImage() async {
+    log(('Image sasdasdasdasd'));
+    final File img = await pickImg(ImageSource.gallery);
+    image = img;
+    imgProfile = await uploadFile(img);
+    log("sadsad ${imgProfile}");
+    setState(() {});
+  }
+
+  Future<String> uploadFile(File file) async {
+    Reference ref =
+        FirebaseStorage.instance.ref().child("${file.path.split("/").last}");
+    UploadTask uploadTask = ref.putFile(file);
+    TaskSnapshot snapshot = await uploadTask.whenComplete(() {});
+    String fileUrl = await snapshot.ref.getDownloadURL();
+    return fileUrl;
   }
 
   textFieldCustomPassword(String label, controller) {
@@ -103,9 +200,14 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
                 SizedBox(
                   height: 5,
                 ),
-                TextField(
+                TextFormField(
                   controller: controller,
                   obscureText: (label == 'รหัสผ่าน') ? _isobscureText : false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter ';
+                    }
+                  },
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 15.0),
                       filled: true, // Fill the background
@@ -133,26 +235,6 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
                 ),
               ],
             )),
-        Visibility(
-            visible: (label == 'รหัสผ่าน')
-                ? passwordText
-                : (label == 'อีเมล')
-                    ? emailText
-                    : (label == 'ชื่อ')
-                        ? firstName
-                        : (label == 'นามสกุล')
-                            ? lastName
-                            : false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "กรุณากรอกข้อมูล",
-                  style: TextStyle(color: Colors.red),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            )),
         SizedBox(
           height: 5,
         )
@@ -160,47 +242,17 @@ class _RegisterMemberPageState extends State<RegisterMemberPage> {
     );
   }
 
-  ButtonStyeCustom(String label, String route) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: (label == 'ล็อคอิน' || label == 'ล็อคอิน Facebook')
-                  ? EdgeInsets.symmetric(horizontal: 95, vertical: 10)
-                  : null,
-              foregroundColor: Colors.white,
-              backgroundColor: Color.fromARGB(255, 51, 221, 243), // text color
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15), // button border radius
-              ),
-              elevation: 5, // button elevation
-            ),
-            onPressed: () {
-              _onRegister();
-            },
-            child: Text(
-              label,
-              style: TextStyle(
-                fontStyle: FontStyle.normal,
-                color:
-                    (label == 'ล็อคอิน Facebook') ? Colors.white : Colors.black,
-              ),
-            )),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    );
-  }
-
-  _onRegister() {
-    setState(() {
-      passwordText = password_controller.text.isEmpty;
-      emailText = email_controller.text.isEmpty;
-      firstName = firstName_controller.text.isEmpty;
-
-      lastName = lastName_controller.text.isEmpty;
-    });
+  void _register() {
+    log("sad=>${imgProfile}");
+    // if (_formKey.currentState!.validate()) {
+    //   final RegisterPayload registerPayload = RegisterPayload(
+    //       firstName: firstName_controller.text,
+    //       lastName: lastName_controller.text,
+    //       email: email_controller.text,
+    //       imgProfile: imgProfile);
+    //   // log("is CusPayload Data => ${customerPayload.birthDate}");
+    //   Modular.get<RegisterBloc>()
+    //       .add(RegisterMemberEvent(registerPayload: registerPayload));
+    // }
   }
 }
